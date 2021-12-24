@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Autofac;
+using AutofacTest.Containers;
+using AutofacTest.Interfaces;
 
 namespace AutofacTest
 {
@@ -6,7 +8,16 @@ namespace AutofacTest
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            WriteDate();
+        }
+
+        private static void WriteDate()
+        {
+            using (var scope = MainContainer.RegisterContainer().BeginLifetimeScope())
+            {
+                var writer = scope.Resolve<IDateWriter>();
+                writer.WriteDate();
+            }
         }
     }
 }
